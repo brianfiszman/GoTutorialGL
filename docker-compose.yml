@@ -1,0 +1,29 @@
+version: "3"
+services:
+  database:
+    image: postgres:buster
+    container_name: db
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123123
+      - POSTGRES_DB=testdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/tmp
+
+  app:
+    image: app
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+    networks:
+      - default
+    ports:
+    - "8001:8001"
+volumes:
+  data:

@@ -7,4 +7,5 @@ RUN go mod download
 # Copy app files
 COPY . .
 # Run go app
-CMD ["go","run","main.go"]
+RUN go get github.com/githubnemo/CompileDaemon
+ENTRYPOINT CompileDaemon -command="go run main.go"
