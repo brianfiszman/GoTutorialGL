@@ -3,10 +3,12 @@ services:
   database:
     image: postgres:buster
     container_name: db
+    env_file:
+      - .env
     restart: always
     environment:
       - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=123123
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
       - POSTGRES_DB=testdb
     ports:
       - "5432:5432"
@@ -16,6 +18,8 @@ services:
   app:
     image: app
     container_name: app
+    env_file: 
+      - .env
     build:
       context: .
       dockerfile: Dockerfile
