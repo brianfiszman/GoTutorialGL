@@ -1,10 +1,9 @@
 package main
 
 import (
-	"fmt"
-	
+	"training/tutorialGL/handlers"
 )
 
 func main() {
-	fmt.Println("Hola mundo!")
+	handlers.HandleRequests()
 }
