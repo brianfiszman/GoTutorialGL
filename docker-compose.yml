@@ -7,18 +7,18 @@ services:
       - .env
     restart: always
     environment:
-      - POSTGRES_USER=root
+      - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-      - POSTGRES_DB=testdb
+      - POSTGRES_DB=${DATABASE_NAME}
     ports:
       - "5432:5432"
     volumes:
-      - data:/tmp
+      - "./postgresql-data:/var/lib/postgresql/data"
 
   app:
     image: app
     container_name: app
-    env_file: 
+    env_file:
       - .env
     build:
       context: .
@@ -28,6 +28,4 @@ services:
     networks:
       - default
     ports:
-    - "8001:8001"
-volumes:
-  data:
+      - "${HTTP_PORT}:${HTTP_PORT}"

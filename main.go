@@ -1,7 +1,7 @@
 package main
 
 import (
-	"training/tutorialGL/handlers"
+	"training/tutorialGL/pkg/presentation/handlers"
 )
 
 func main() {
