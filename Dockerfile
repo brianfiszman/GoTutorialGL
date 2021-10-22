@@ -14,4 +14,4 @@ RUN go mod download
 COPY . .
 # Run go app
 RUN go get github.com/githubnemo/CompileDaemon
-ENTRYPOINT CompileDaemon -command="go run main.go"
+ENTRYPOINT CompileDaemon -command="env $(cat .env) go run main.go"

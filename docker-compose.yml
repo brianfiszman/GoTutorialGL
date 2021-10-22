@@ -7,11 +7,11 @@ services:
       - .env
     restart: always
     environment:
-      - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-      - POSTGRES_DB=${DATABASE_NAME}
+      POSTGRES_DB: ${DATABASE_USER}
+      POSTGRES_USER: ${DATABASE_PASS}
+      POSTGRES_PASSWORD: ${DATABASE_NAME}
     ports:
-      - "5432:5432"
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
     volumes:
       - "./postgresql-data:/var/lib/postgresql/data"
 
