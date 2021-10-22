@@ -11,8 +11,6 @@ type DatabaseContainer struct {
 
 type Database interface {
 	Connect()
-	// Insert()
-	// Select()
 }
 
 func NewDatabaseContainer() *DatabaseContainer {

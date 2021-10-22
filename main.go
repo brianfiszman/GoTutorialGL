@@ -1,9 +1,10 @@
 package main
 
-import (
-	"training/tutorialGL/pkg/presentation/handlers"
-)
+import "training/tutorialGL/pkg/containers"
 
 func main() {
-	handlers.HandleRequests()
+	var app containers.AppContainer = containers.NewAppContainer()
+
+	// Server initializes listening
+	app.ServerContainer.Server.Run()
 }
