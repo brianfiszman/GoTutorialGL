@@ -7,9 +7,9 @@ services:
       - .env
     restart: always
     environment:
-      POSTGRES_DB: ${DATABASE_USER}
-      POSTGRES_USER: ${DATABASE_PASS}
-      POSTGRES_PASSWORD: ${DATABASE_NAME}
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASS}
     ports:
       - "${DATABASE_PORT}:${DATABASE_PORT}"
     volumes:
@@ -25,7 +25,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - database
-    networks:
-      - default
     ports:
       - "${HTTP_PORT}:${HTTP_PORT}"
+    volumes:
+      - "./:/app"

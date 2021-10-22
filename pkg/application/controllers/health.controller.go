@@ -5,10 +5,22 @@ import (
 	"net/http"
 )
 
+type Response struct {
+	Status  int                    `json:"status"`
+	Message string                 `json:"message"`
+	Data    map[string]interface{} `json:"data"`
+}
+
+type HealthController struct {
+}
+
 const (
-	response_message = "Hola Mundo"
+	RESPONSE_MSG = "Hola Mundo"
 )
 
-func HealthChecks(rw http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(rw).Encode(response_message)
+func (HealthController) HealthChecks(rw http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(rw).Encode(Response{
+		Status:  http.StatusOK,
+		Message: RESPONSE_MSG,
+	})
 }

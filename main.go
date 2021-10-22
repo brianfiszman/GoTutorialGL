@@ -6,5 +6,5 @@ func main() {
 	var app containers.AppContainer = containers.NewAppContainer()
 
 	// Server initializes listening
-	app.HealthContainer.Routers.NewHealthRouter()
+	app.ServerContainer.Server.Run()
 }
