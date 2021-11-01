@@ -6,13 +6,14 @@ import (
 	"github.com/go-chi/chi"
 )
 
-type HealthRouter struct {
-	Router           *chi.Mux
-	HealthController controllers.HealthController
+type HealthRoutes struct {
+	Router     *chi.Mux
+	Controller controllers.HealthController
 }
 
-func NewHealthRouter() (h HealthRouter) {
+func NewHealthRoutes() (h HealthRoutes) {
 	h.Router = chi.NewRouter()
-	h.Router.Get("/", h.HealthController.HealthChecks)
+
+	h.Router.Get("/", h.Controller.HealthChecks)
 	return h
 }

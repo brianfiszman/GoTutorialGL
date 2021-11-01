@@ -6,17 +6,17 @@ import (
 )
 
 type HealthContainer struct {
-	Router     routers.HealthRouter
+	Router     routers.HealthRoutes
 	Controller controllers.HealthController
 }
 
 func NewHealthContainer() HealthContainer {
 	var h HealthContainer = HealthContainer{
 		Controller: controllers.HealthController{},
-		Router:     routers.NewHealthRouter(),
+		Router:     routers.NewHealthRoutes(),
 	}
 
-	h.Router.HealthController = h.Controller
+	h.Router.Controller = h.Controller
 
 	return h
 }

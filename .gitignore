@@ -9,3 +9,7 @@ main
 
 *.env*
 .env
+
+postgresql-data
+
+.vscode
