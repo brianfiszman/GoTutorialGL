@@ -15,7 +15,7 @@ type HealthController struct {
 }
 
 const (
-	RESPONSE_MSG = "Hola Mundo"
+	RESPONSE_MSG = "IS ALIVE"
 )
 
 func (HealthController) HealthChecks(rw http.ResponseWriter, r *http.Request) {

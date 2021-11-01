@@ -6,6 +6,7 @@ import (
 	"os"
 	"training/tutorialGL/pkg/persistence/config"
 
+	sq "github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
@@ -25,4 +26,29 @@ func (d *PostgreSQL) Connect() {
 	}
 
 	fmt.Println("Connected to PostgreSQL")
+}
+
+func (d *PostgreSQL) Insert(ctx context.Context, entity map[string]interface{}, entityName string) error {
+	keys := make([]string, 0, len(entity))
+	values := make([]interface{}, 0, len(entity))
+
+	for k, v := range entity {
+		keys = append(keys, k)
+		values = append(values, v)
+	}
+
+	fmt.Println("KEYS", keys)
+	fmt.Println("VALUES", values)
+
+	query, _, _ := sq.Insert(entityName).Columns(keys...).Values(values...).PlaceholderFormat(sq.Dollar).ToSql()
+
+	fmt.Println("QUERYSTRING", query)
+
+	if _, err := d.ConnectionPool.Exec(context.Background(), query, values...); err != nil {
+		// Handling error, if occur
+		fmt.Println("Unable to insert due to: ", err)
+		return err
+	}
+
+	return nil
 }
