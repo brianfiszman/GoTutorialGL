@@ -11,13 +11,14 @@ type ServerContainer struct {
 }
 
 func NewServerContainer(userRoutes routers.UserRoutes, healthRoutes routers.HealthRoutes) (s ServerContainer) {
-	var http *routers.AppRouter = &routers.AppRouter{
-		UserRoutes: userRoutes,
+	var httpConnector *routers.AppRouter = &routers.AppRouter{
+		UserRoutes:   userRoutes,
+		HealthRoutes: healthRoutes,
 	}
-	http.Router = http.NewAppRouter()
+	httpConnector.Router = httpConnector.NewAppRouter()
 
 	var serverContainer ServerContainer = ServerContainer{&server.Server{
-		AppRouter: http,
+		AppRouter: httpConnector,
 		HTTP_PORT: os.Getenv("HTTP_PORT"),
 	}}
 	return serverContainer

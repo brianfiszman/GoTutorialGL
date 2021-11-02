@@ -17,8 +17,6 @@ func (u UserRepository) Insert(ctx context.Context, user schemas.UserSchema) err
 
 	newUser := schemas.NewUserSchema(user)
 
-	log.Println("new User", newUser.StructToMap())
-
 	err := u.Database.Insert(ctx, newUser.StructToMap(), entityName)
 
 	if err != nil {
