@@ -37,12 +37,7 @@ func (d *PostgreSQL) Insert(ctx context.Context, entity map[string]interface{}, 
 		values = append(values, v)
 	}
 
-	fmt.Println("KEYS", keys)
-	fmt.Println("VALUES", values)
-
 	query, _, _ := sq.Insert(entityName).Columns(keys...).Values(values...).PlaceholderFormat(sq.Dollar).ToSql()
-
-	fmt.Println("QUERYSTRING", query)
 
 	if _, err := d.ConnectionPool.Exec(context.Background(), query, values...); err != nil {
 		// Handling error, if occur
