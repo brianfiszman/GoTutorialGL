@@ -15,5 +15,6 @@ func (u UserRoutes) NewUserRoutes() *chi.Mux {
 	u.Router = chi.NewRouter()
 
 	u.Router.Post("/users", u.Controller.Create)
+	u.Router.Get("/users", u.Controller.Get)
 	return u.Router
 }

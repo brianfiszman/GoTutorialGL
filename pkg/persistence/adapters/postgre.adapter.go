@@ -7,6 +7,7 @@ import (
 	"training/tutorialGL/pkg/persistence/config"
 
 	sq "github.com/Masterminds/squirrel"
+	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
@@ -28,7 +29,7 @@ func (d *PostgreSQL) Connect() {
 	fmt.Println("Connected to PostgreSQL")
 }
 
-func (d *PostgreSQL) Insert(ctx context.Context, entity map[string]interface{}, entityName string) error {
+func (d *PostgreSQL) Insert(ctx context.Context, entity map[string]interface{}, tableName string) error {
 	keys := make([]string, 0, len(entity))
 	values := make([]interface{}, 0, len(entity))
 
@@ -37,7 +38,7 @@ func (d *PostgreSQL) Insert(ctx context.Context, entity map[string]interface{}, 
 		values = append(values, v)
 	}
 
-	query, _, _ := sq.Insert(entityName).Columns(keys...).Values(values...).PlaceholderFormat(sq.Dollar).ToSql()
+	query, _, _ := sq.Insert(tableName).Columns(keys...).Values(values...).PlaceholderFormat(sq.Dollar).ToSql()
 
 	if _, err := d.ConnectionPool.Exec(context.Background(), query, values...); err != nil {
 		// Handling error, if occur
@@ -46,4 +47,22 @@ func (d *PostgreSQL) Insert(ctx context.Context, entity map[string]interface{}, 
 	}
 
 	return nil
+}
+
+func (d *PostgreSQL) Select(ctx context.Context, cols []string, tableName string) (pgx.Rows, error) {
+
+	query, _, err := sq.Select(cols...).From(tableName).ToSql()
+
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := d.ConnectionPool.Query(context.Background(), query)
+
+	if err != nil {
+		fmt.Println("Unable to insert due to: ", err)
+		return nil, err
+	}
+
+	return rows, nil
 }
