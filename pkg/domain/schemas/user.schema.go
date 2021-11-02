@@ -54,14 +54,15 @@ func (u UserSchema) StructToMap() map[string]interface{} {
 	return m
 }
 
-func (u UserSchema) GetFields() (fields []string) {
+func (u UserSchema) GetFields() []string {
 	v := reflect.ValueOf(u)
+	var fields []string
 
 	for i := 0; i < v.NumField(); i++ {
 		fields = append(fields, v.Type().Field(i).Tag.Get(DatabaseTag))
 	}
 
-	return
+	return fields
 }
 
 func (u UserSchema) GetValues() (values []interface{}) {

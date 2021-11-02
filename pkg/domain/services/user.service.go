@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"training/tutorialGL/pkg/application/dtos"
 	"training/tutorialGL/pkg/domain/schemas"
@@ -29,6 +30,23 @@ func (u UserService) Create(ctx context.Context, createUserDTO dtos.CreateUserDT
 	}
 
 	return responseUserDTO, err
+}
+
+func (u UserService) Get(ctx context.Context) ([]dtos.GetUsersDTOResponse, error) {
+
+	userSlice, err := u.Repository.Get(ctx)
+
+	if err != nil {
+		log.Fatal(":::::::::::::::::::::::::::ERROR SERVICE::::::::::::::::::::::::", err)
+	}
+
+	j, _ := json.Marshal(userSlice)
+
+	var users []dtos.GetUsersDTOResponse
+
+	json.Unmarshal([]byte(j), &users)
+
+	return users, err
 }
 
 func userDTOToUserSchema(u dtos.CreateUserDTO) schemas.UserSchema {
