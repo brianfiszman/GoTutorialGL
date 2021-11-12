@@ -6,6 +6,8 @@ import (
 	"training/tutorialGL/pkg/interfaces"
 	"training/tutorialGL/pkg/persistence/repositories"
 	"training/tutorialGL/pkg/presentation/routers"
+
+	"github.com/go-chi/jwtauth/v5"
 )
 
 type UserContainer struct {
@@ -15,7 +17,7 @@ type UserContainer struct {
 	Repository repositories.UserRepository
 }
 
-func NewUserContainer(d interfaces.DatabaseInterface) UserContainer {
+func NewUserContainer(d interfaces.DatabaseInterface, t *jwtauth.JWTAuth) UserContainer {
 	var userRepository = &repositories.UserRepository{Database: d}
 	var userService = services.UserService{Repository: *userRepository}
 	var u UserContainer = UserContainer{
@@ -25,8 +27,10 @@ func NewUserContainer(d interfaces.DatabaseInterface) UserContainer {
 			Controller: controllers.UserController{
 				Service: userService,
 			},
+			TokenAuth: t,
 		},
 	}
+	u.Router.TokenAuth = t
 	u.Router.Router = u.Router.NewUserRoutes()
 	return u
 }

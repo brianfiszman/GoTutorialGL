@@ -12,8 +12,9 @@ type HealthContainer struct {
 
 func NewHealthContainer() HealthContainer {
 	var h HealthContainer = HealthContainer{
-		Controller: controllers.HealthController{},
-		Router:     routers.NewHealthRoutes(),
+		Router: routers.HealthRoutes{
+			Controller: controllers.HealthController{},
+		},
 	}
 
 	h.Router.Controller = h.Controller

@@ -3,13 +3,8 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"training/tutorialGL/pkg/application/dtos"
 )
-
-type Response struct {
-	Status  int                    `json:"status"`
-	Message string                 `json:"message"`
-	Data    map[string]interface{} `json:"data"`
-}
 
 type HealthController struct {
 }
@@ -19,7 +14,7 @@ const (
 )
 
 func (HealthController) HealthChecks(rw http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(rw).Encode(Response{
+	json.NewEncoder(rw).Encode(dtos.BasicResponseDTO{
 		Status:  http.StatusOK,
 		Message: RESPONSE_MSG,
 	})
